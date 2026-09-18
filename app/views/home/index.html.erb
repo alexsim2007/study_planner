@@ -1,0 +1,10 @@
+<h1>Главная страница</h1>
+
+<p>Привет, <%= current_user.name %>!</p>
+
+<p>
+  Вы вошли как:
+  <%= current_user.email %>
+</p>
+
+<%= button_to "Выйти", logout_path, method: :delete %>
