@@ -1,24 +1,41 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Study Planner
 
-Things you may want to cover:
+Web application for planning and managing study tasks.
 
-* Ruby version
+## Technologies
 
-* System dependencies
+- Ruby
+- Ruby on Rails
+- PostgreSQL
+- HTML / CSS
+- JavaScript
+- Hotwire
 
-* Configuration
+## Features
 
-* Database creation
+- User registration and authorization
+- Subject management
+- Task management
+- Deadlines and priorities
+- Task statuses
+- Search and filtering
+- Statistics
+- Live data updates
 
-* Database initialization
+## Requirements
 
-* How to run the test suite
+- Ruby 4.0+
+- Rails 8.1+
+- PostgreSQL 18+
 
-* Services (job queues, cache servers, search engines, etc.)
+## Installation
 
-* Deployment instructions
-
-* ...
+```bash
+git clone <repository-url>
+cd study_planner
+bundle install
+bin/rails db:create
+bin/rails db:migrate
+bin/rails server
