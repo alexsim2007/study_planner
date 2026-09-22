@@ -33,3 +33,7 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+.DS_Store
+.idea/study_planner.iml
+.idea/study_planner.iml
+/.idea
