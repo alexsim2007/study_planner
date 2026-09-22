@@ -1,10 +1,120 @@
-<h1>Главная страница</h1>
+<section class="hero">
+  <div>
+    <p class="eyebrow">STUDY PLANNER</p>
 
-<p>Привет, <%= current_user.name %>!</p>
+    <h1>
+      Привет, <%= current_user.name %>
+    </h1>
 
-<p>
-  Вы вошли как:
-  <%= current_user.email %>
-</p>
+    <p class="hero__description">
+      Планируй учебные задачи, следи за дедлайнами
+      и держи всё обучение под контролем.
+    </p>
+  </div>
+</section>
 
-<%= button_to "Выйти", logout_path, method: :delete %>
+<section class="dashboard-grid">
+  <article class="glass stat-card">
+    <span class="stat-card__label">Всего задач</span>
+    <strong class="stat-card__value">0</strong>
+    <span class="stat-card__hint">Пока задач нет</span>
+  </article>
+
+  <article class="glass stat-card">
+    <span class="stat-card__label">Выполнено</span>
+    <strong class="stat-card__value">0</strong>
+    <span class="stat-card__hint">Начни с первой задачи</span>
+  </article>
+
+  <article class="glass stat-card">
+    <span class="stat-card__label">Ближайший дедлайн</span>
+    <strong class="stat-card__value">—</strong>
+    <span class="stat-card__hint">Дедлайнов пока нет</span>
+  </article>
+</section>
+
+<section class="glass tasks-card">
+  <div class="tasks-card__header">
+    <div>
+      <p class="eyebrow">OVERVIEW</p>
+      <h2>Предстоящие задачи</h2>
+    </div>
+
+    <button
+      class="button"
+      type="button"
+      id="open-task-modal"
+    >
+      Добавить задачу
+    </button>
+  </div>
+
+  <div class="empty-state">
+    <h3>Здесь пока пусто</h3>
+
+    <p>
+      Когда мы добавим систему задач,
+      они будут отображаться здесь.
+    </p>
+  </div>
+</section>
+<div class="modal" id="task-modal" aria-hidden="true">
+  <div class="modal__overlay" id="modal-overlay"></div>
+
+  <div
+    class="modal__content glass"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal__header">
+      <div>
+        <p class="eyebrow">NEW TASK</p>
+        <h2 id="modal-title">Новая задача</h2>
+      </div>
+
+      <button
+        class="modal__close"
+        type="button"
+        id="close-task-modal"
+        aria-label="Закрыть"
+      >
+        ×
+      </button>
+    </div>
+
+    <form class="modal__form" id="task-form">
+      <div>
+        <label for="task-title">Название</label>
+        <input
+          type="text"
+          id="task-title"
+          placeholder="Например, подготовить отчёт"
+        >
+      </div>
+
+      <div>
+        <label for="task-description">Описание</label>
+        <textarea
+          id="task-description"
+          placeholder="Дополнительная информация"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="modal__actions">
+        <button
+          class="button button--secondary"
+          type="button"
+          id="cancel-task-modal"
+        >
+          Отмена
+        </button>
+
+        <button class="button" type="submit">
+          Сохранить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
