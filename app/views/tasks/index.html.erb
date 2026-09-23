@@ -1,0 +1,116 @@
+<header class="page-header">
+  <div>
+    <p class="eyebrow">TASKS</p>
+    <h1>Все задания</h1>
+    <p>Следи за текущими заданиями и дедлайнами.</p>
+  </div>
+
+  <%= link_to "+ Добавить", new_task_path, class: "button" %>
+</header>
+
+
+<section class="glass table-card">
+
+  <div class="task-filters">
+
+    <select>
+      <option>Все предметы</option>
+      <option>Программирование</option>
+      <option>Математика</option>
+      <option>Физика</option>
+    </select>
+
+    <select>
+      <option>Все статусы</option>
+      <option>Не выполнено</option>
+      <option>В процессе</option>
+      <option>Выполнено</option>
+    </select>
+
+    <input
+      type="search"
+      placeholder="Поиск..."
+    >
+
+  </div>
+
+
+  <div class="table-wrapper">
+
+    <table class="tasks-table">
+
+      <thead>
+      <tr>
+        <th>Название</th>
+        <th>Предмет</th>
+        <th>Дедлайн</th>
+        <th>Статус</th>
+        <th>Приоритет</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+      <tr>
+        <td>Лабораторная №3</td>
+        <td>Математика</td>
+        <td>18.09</td>
+
+        <td>
+            <span class="status status--red">
+              Не выполнено
+            </span>
+        </td>
+
+        <td>
+            <span class="status status--red">
+              Высокий
+            </span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>Контрольная работа</td>
+        <td>Программирование</td>
+        <td>20.09</td>
+
+        <td>
+            <span class="status status--yellow">
+              В процессе
+            </span>
+        </td>
+
+        <td>
+            <span class="status status--yellow">
+              Средний
+            </span>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>Лабораторная №2</td>
+        <td>Физика</td>
+        <td>22.09</td>
+
+        <td>
+            <span class="status status--green">
+              Выполнено
+            </span>
+        </td>
+
+        <td>
+            <span class="status status--green">
+              Низкий
+            </span>
+        </td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>

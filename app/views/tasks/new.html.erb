@@ -1,0 +1,88 @@
+<header class="page-header page-header--compact">
+  <div>
+    <p class="eyebrow">NEW TASK</p>
+    <h1>Новое задание</h1>
+    <p>Добавь информацию о будущем задании.</p>
+  </div>
+</header>
+
+
+<section class="glass task-editor">
+
+  <div class="field field--full">
+    <label>Название</label>
+
+    <input
+      type="text"
+      placeholder="Например, лабораторная работа №4"
+    >
+  </div>
+
+
+  <div class="field field--full">
+    <label>Описание</label>
+
+    <textarea
+      rows="5"
+      placeholder="Краткое описание задания"
+    ></textarea>
+  </div>
+
+
+  <div class="form-grid">
+
+    <div class="field">
+      <label>Предмет</label>
+
+      <select>
+        <option>Выберите предмет</option>
+        <option>Программирование</option>
+        <option>Математика</option>
+        <option>Физика</option>
+      </select>
+    </div>
+
+
+    <div class="field">
+      <label>Дедлайн</label>
+      <input type="date">
+    </div>
+
+
+    <div class="field">
+      <label>Приоритет</label>
+
+      <select>
+        <option>Низкий</option>
+        <option selected>Средний</option>
+        <option>Высокий</option>
+      </select>
+    </div>
+
+
+    <div class="field">
+      <label>Статус</label>
+
+      <select>
+        <option>Не выполнено</option>
+        <option>В процессе</option>
+        <option>Выполнено</option>
+      </select>
+    </div>
+
+  </div>
+
+
+  <div class="task-editor__actions">
+
+    <%= link_to "Отмена",
+                tasks_path,
+                class: "button button--secondary" %>
+
+    <button type="button" class="button">
+      Сохранить
+    </button>
+
+  </div>
+
+</section>

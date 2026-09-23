@@ -1,0 +1,64 @@
+<header class="page-header">
+  <div>
+    <p class="eyebrow">PROFILE</p>
+    <h1>Профиль</h1>
+    <p>Информация о твоём аккаунте.</p>
+  </div>
+</header>
+
+
+<section class="glass profile-card">
+
+  <div class="profile-card__main">
+
+    <div class="profile-avatar">
+      <%= current_user.name.first.upcase %>
+    </div>
+
+    <div>
+      <h2><%= current_user.name %></h2>
+      <p><%= current_user.email %></p>
+    </div>
+
+  </div>
+
+
+  <div class="profile-stats">
+
+    <div>
+      <span>Предметы</span>
+      <strong>3</strong>
+    </div>
+
+    <div>
+      <span>Задания</span>
+      <strong>8</strong>
+    </div>
+
+    <div>
+      <span>Выполнено</span>
+      <strong>5</strong>
+    </div>
+
+  </div>
+
+
+  <div class="profile-actions">
+
+    <button
+      class="button button--secondary"
+      type="button"
+    >
+      Редактировать профиль
+    </button>
+
+    <button
+      class="button danger-button"
+      type="button"
+    >
+      Выйти из аккаунта
+    </button>
+
+  </div>
+
+</section>

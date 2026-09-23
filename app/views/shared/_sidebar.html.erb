@@ -1,0 +1,87 @@
+<aside class="sidebar">
+  <div class="sidebar__brand">
+    <div class="sidebar__logo">S</div>
+
+    <span>
+      Study
+      <strong>Planner</strong>
+    </span>
+  </div>
+
+  <nav class="sidebar__nav">
+
+    <%= link_to root_path,
+                class: "sidebar__link #{'is-active' if current_page?(root_path)}" do %>
+
+      <svg viewBox="0 0 24 24">
+        <path d="M3 11.5L12 4l9 7.5"/>
+        <path d="M5 10v10h14V10"/>
+      </svg>
+
+      <span>Главная</span>
+    <% end %>
+
+
+    <%= link_to subjects_path,
+                class: "sidebar__link #{'is-active' if current_page?(subjects_path)}" do %>
+
+      <svg viewBox="0 0 24 24">
+        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
+        <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5A2.5 2.5 0 0 1 20 21.5z"/>
+      </svg>
+
+      <span>Предметы</span>
+    <% end %>
+
+
+    <%= link_to tasks_path,
+                class: "sidebar__link #{'is-active' if current_page?(tasks_path) || current_page?(new_task_path)}" do %>
+
+      <svg viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="3"/>
+        <path d="m8 12 2.5 2.5L16 9"/>
+      </svg>
+
+      <span>Задания</span>
+    <% end %>
+
+
+    <%= link_to profile_path,
+                class: "sidebar__link #{'is-active' if current_page?(profile_path)}" do %>
+
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>
+      </svg>
+
+      <span>Профиль</span>
+    <% end %>
+
+  </nav>
+
+  <div class="sidebar__bottom">
+    <div class="sidebar__user">
+      <div class="sidebar__avatar">
+        <%= current_user.name.first.upcase %>
+      </div>
+
+      <div>
+        <strong><%= current_user.name %></strong>
+        <span><%= current_user.email %></span>
+      </div>
+    </div>
+
+    <%= button_to logout_path,
+                  method: :delete,
+                  class: "sidebar__logout" do %>
+
+      <svg viewBox="0 0 24 24">
+        <path d="M10 4H5v16h5"/>
+        <path d="M14 8l4 4-4 4"/>
+        <path d="M18 12H9"/>
+      </svg>
+
+      <span>Выйти</span>
+    <% end %>
+  </div>
+</aside>

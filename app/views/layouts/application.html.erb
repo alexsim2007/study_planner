@@ -24,36 +24,54 @@
   </head>
 
   <body>
-  <header class="topbar">
-    <div class="topbar__content">
-      <%= link_to "Study Planner", root_path, class: "brand" %>
 
-      <% if logged_in? %>
-        <div class="user-menu">
-          <span class="user-menu__name">
-            <%= current_user.name %>
-          </span>
+  <% if logged_in? %>
 
-          <%= button_to "Выйти", logout_path, method: :delete, class: "button button--secondary" %>
+    <div class="app-shell">
+
+      <%= render "shared/sidebar" %>
+
+      <main class="app-main">
+
+        <% if notice %>
+          <div class="flash flash--success">
+            <%= notice %>
+          </div>
+        <% end %>
+
+        <% if alert %>
+          <div class="flash flash--error">
+            <%= alert %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+
+      </main>
+
+    </div>
+
+  <% else %>
+
+    <main class="auth-page">
+
+      <% if notice %>
+        <div class="flash flash--success">
+          <%= notice %>
         </div>
       <% end %>
-    </div>
-  </header>
 
-  <main class="page">
-    <% if notice %>
-      <div class="flash flash--success">
-        <%= notice %>
-      </div>
-    <% end %>
+      <% if alert %>
+        <div class="flash flash--error">
+          <%= alert %>
+        </div>
+      <% end %>
 
-    <% if alert %>
-      <div class="flash flash--error">
-        <%= alert %>
-      </div>
-    <% end %>
+      <%= yield %>
 
-    <%= yield %>
-  </main>
+    </main>
+
+  <% end %>
+
   </body>
 </html>
