@@ -60,6 +60,16 @@
   </nav>
 
   <div class="sidebar__bottom">
+
+    <button
+      type="button"
+      class="theme-toggle"
+      id="theme-toggle"
+    >
+      <span id="theme-toggle-icon">☀</span>
+      <span id="theme-toggle-text">Светлая тема</span>
+    </button>
+
     <div class="sidebar__user">
       <div class="sidebar__avatar">
         <%= current_user.name.first.upcase %>

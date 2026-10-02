@@ -1,13 +1,3 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
 :root {
     --bg-main: #040507;
     --bg-secondary: #090b10;
@@ -35,6 +25,29 @@
             0 12px 40px rgba(0, 0, 0, 0.45);
 
     --blur: 26px;
+}
+
+html[data-theme="light"] {
+    --bg-main: #f3f5f9;
+    --bg-secondary: #ffffff;
+
+    --glass-bg: rgba(255, 255, 255, 0.62);
+    --glass-bg-hover: rgba(255, 255, 255, 0.82);
+    --glass-border: rgba(20, 25, 40, 0.10);
+
+    --text-main: #181b24;
+    --text-secondary: #5e6472;
+    --text-muted: #8a91a0;
+
+    --accent: #6f78e8;
+    --accent-hover: #5964dc;
+    --accent-soft: rgba(111, 120, 232, 0.13);
+
+    --danger: #e6536b;
+    --success: #3eaa78;
+
+    --shadow-glass:
+            0 12px 40px rgba(80, 90, 120, 0.12);
 }
 
 * {
@@ -613,9 +626,7 @@ textarea::placeholder {
     width: auto;
 }
 
-/* ============================= */
-/* APP LAYOUT                    */
-/* ============================= */
+/* App Layout*/
 
 .app-shell {
     min-height: 100vh;
@@ -634,10 +645,7 @@ textarea::placeholder {
     padding: 70px 0;
 }
 
-
-/* ============================= */
-/* SIDEBAR                       */
-/* ============================= */
+/* Sidebar */
 
 .sidebar {
     position: fixed;
@@ -904,9 +912,8 @@ textarea::placeholder {
     box-shadow: none;
 }
 
-/* ============================= */
-/* PAGE HEADER                   */
-/* ============================= */
+/* Page header */
+
 
 .page-header {
     display: flex;
@@ -933,9 +940,7 @@ textarea::placeholder {
 }
 
 
-/* ============================= */
-/* SUBJECTS                      */
-/* ============================= */
+/* Subjects */
 
 .subjects-grid {
     display: grid;
@@ -1040,9 +1045,7 @@ textarea::placeholder {
 }
 
 
-/* ============================= */
-/* TASK FILTERS                  */
-/* ============================= */
+/* Task filters */
 
 .table-card {
     padding: 20px;
@@ -1081,9 +1084,7 @@ select:focus {
 }
 
 
-/* ============================= */
-/* TASK TABLE                    */
-/* ============================= */
+/* Task table */
 
 .table-wrapper {
     overflow-x: auto;
@@ -1165,9 +1166,7 @@ select:focus {
 }
 
 
-/* ============================= */
-/* TASK EDITOR                   */
-/* ============================= */
+/* Task editor */
 
 .task-editor {
     max-width: 850px;
@@ -1204,9 +1203,9 @@ select:focus {
 }
 
 
-/* ============================= */
-/* PROFILE                       */
-/* ============================= */
+
+/* PRrofile */
+
 
 .profile-card {
     max-width: 800px;
@@ -1312,9 +1311,8 @@ select:focus {
 }
 
 
-/* ============================= */
-/* RESPONSIVE                    */
-/* ============================= */
+
+/* Responsive */
 
 @media (max-width: 1000px) {
 
@@ -1381,4 +1379,106 @@ select:focus {
         grid-template-columns: 1fr;
     }
 
+}
+
+html[data-theme="light"] body {
+    background:
+            radial-gradient(
+                    circle at 18% 12%,
+                    rgba(111, 120, 232, 0.13),
+                    transparent 24%
+            ),
+            radial-gradient(
+                    circle at 82% 88%,
+                    rgba(160, 170, 255, 0.16),
+                    transparent 26%
+            ),
+            radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255, 255, 255, 0.80),
+                    transparent 30%
+            ),
+            var(--bg-main);
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select {
+    background: rgba(255, 255, 255, 0.58);
+    color: var(--text-main);
+}
+
+html[data-theme="light"] input:focus,
+html[data-theme="light"] textarea:focus,
+html[data-theme="light"] select:focus {
+    background: rgba(255, 255, 255, 0.90);
+}
+
+html[data-theme="light"] .empty-state {
+    background: rgba(255, 255, 255, 0.32);
+}
+
+html[data-theme="light"] .modal__overlay {
+    background: rgba(40, 45, 65, 0.22);
+}
+
+html[data-theme="light"] .sidebar {
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.78),
+                    rgba(255, 255, 255, 0.52)
+            );
+
+    border-color: rgba(30, 35, 55, 0.10);
+
+    box-shadow:
+            0 24px 70px rgba(70, 80, 110, 0.13),
+            inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+
+html[data-theme="light"] .sidebar__link:hover {
+    background: rgba(80, 90, 130, 0.06);
+}
+
+html[data-theme="light"] .sidebar__link.is-active {
+    background:
+            linear-gradient(
+                    135deg,
+                    rgba(111, 120, 232, 0.18),
+                    rgba(111, 120, 232, 0.07)
+            );
+
+    border-color: rgba(111, 120, 232, 0.18);
+}
+
+.theme-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 14px;
+    padding: 11px 13px;
+
+    background: transparent;
+    border: 1px solid transparent;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    box-shadow: none;
+}
+
+.theme-toggle:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border);
+
+    color: var(--text-main);
+
+    transform: none;
+    box-shadow: none;
 }

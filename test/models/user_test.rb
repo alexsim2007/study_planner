@@ -52,4 +52,47 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal "alex@example.com", user.email
   end
+
+  test "user has many subjects" do
+    user = User.create!(
+      name: "Alexander",
+      email: "subjects@example.com",
+      password: "password123",
+      password_confirmation: "password123"
+    )
+
+    Subject.create!(
+      name: "Programming",
+      user: user
+    )
+
+    Subject.create!(
+      name: "Mathematics",
+      user: user
+    )
+
+    assert_equal 2, user.subjects.count
+  end
+
+  test "user has tasks through subjects" do
+    user = User.create!(
+      name: "Alexander",
+      email: "tasks@example.com",
+      password: "password123",
+      password_confirmation: "password123"
+    )
+
+    subject = Subject.create!(
+      name: "Programming",
+      user: user
+    )
+
+    Task.create!(
+      title: "Laboratory work",
+      deadline: Date.tomorrow,
+      subject: subject
+    )
+
+    assert_equal 1, user.tasks.count
+  end
 end

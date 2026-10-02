@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_18_094037) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_02_090918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "subjects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "name"], name: "index_subjects_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_subjects_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "deadline", null: false
+    t.text "description"
+    t.string "priority", default: "medium", null: false
+    t.string "status", default: "pending", null: false
+    t.bigint "subject_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_tasks_on_subject_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -21,4 +42,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_18_094037) do
     t.string "password_digest"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "subjects", "users"
+  add_foreign_key "tasks", "subjects"
 end

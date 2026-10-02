@@ -36,3 +36,49 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 })
+
+document.addEventListener("DOMContentLoaded", () => {
+    const themeButton = document.getElementById("theme-toggle")
+    const themeIcon = document.getElementById("theme-toggle-icon")
+    const themeText = document.getElementById("theme-toggle-text")
+
+    const savedTheme = localStorage.getItem("theme") || "dark"
+
+    document.documentElement.setAttribute("data-theme", savedTheme)
+
+    const updateButton = () => {
+        const currentTheme =
+            document.documentElement.getAttribute("data-theme")
+
+        if (currentTheme === "light") {
+            themeIcon.textContent = "☾"
+            themeText.textContent = "Тёмная тема"
+        } else {
+            themeIcon.textContent = "☀"
+            themeText.textContent = "Светлая тема"
+        }
+    }
+
+    updateButton()
+
+    if (!themeButton) {
+        return
+    }
+
+    themeButton.addEventListener("click", () => {
+        const currentTheme =
+            document.documentElement.getAttribute("data-theme")
+
+        const newTheme =
+            currentTheme === "light" ? "dark" : "light"
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            newTheme
+        )
+
+        localStorage.setItem("theme", newTheme)
+
+        updateButton()
+    })
+})
