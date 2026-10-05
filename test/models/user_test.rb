@@ -95,4 +95,63 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal 1, user.tasks.count
   end
+
+  test "total_tasks_count returns all user tasks" do
+    user = User.create!(
+      name: "Alexander",
+      email: "total@example.com",
+      password: "password123",
+      password_confirmation: "password123"
+    )
+
+    subject = Subject.create!(
+      name: "Programming",
+      user: user
+    )
+
+    Task.create!(
+      title: "Task 1",
+      deadline: Date.tomorrow,
+      subject: subject
+    )
+
+    Task.create!(
+      title: "Task 2",
+      deadline: Date.tomorrow,
+      subject: subject
+    )
+
+    assert_equal 2, user.total_tasks_count
+  end
+
+  test "completed_tasks_count returns only completed user tasks" do
+    user = User.create!(
+      name: "Alexander",
+      email: "completed@example.com",
+      password: "password123",
+      password_confirmation: "password123"
+    )
+
+    subject = Subject.create!(
+      name: "Mathematics",
+      user: user
+    )
+
+    Task.create!(
+      title: "Task 1",
+      deadline: Date.tomorrow,
+      status: "completed",
+      subject: subject
+    )
+
+    Task.create!(
+      title: "Task 2",
+      deadline: Date.tomorrow,
+      status: "pending",
+      subject: subject
+    )
+
+    assert_equal 1, user.completed_tasks_count
+  end
+
 end

@@ -17,4 +17,20 @@ class Task < ApplicationRecord
   validates :priority,
             presence: true,
             inclusion: { in: PRIORITIES }
+
+  def completed?
+    status == "completed"
+  end
+
+  def overdue?
+    deadline.present? &&
+      deadline < Date.current &&
+      !completed?
+  end
+
+  def days_left
+    return nil unless deadline
+
+    (deadline - Date.current).to_i
+  end
 end

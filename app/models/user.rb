@@ -9,6 +9,14 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
 
+  def total_tasks_count
+    tasks.count
+  end
+
+  def completed_tasks_count
+    tasks.where(status: "completed").count
+  end
+
   private
 
   def normalize_email

@@ -70,4 +70,74 @@ class SubjectTest < ActiveSupport::TestCase
 
     assert second_subject.valid?
   end
+
+  test "completed_tasks_count returns number of completed tasks" do
+    Subject.create!(
+      name: "Mathematics",
+      user: @user
+    )
+
+    subject = Subject.find_by(name: "Mathematics")
+
+    Task.create!(
+      title: "Task 1",
+      deadline: Date.tomorrow,
+      status: "completed",
+      priority: "medium",
+      subject: subject
+    )
+
+    Task.create!(
+      title: "Task 2",
+      deadline: Date.tomorrow,
+      status: "pending",
+      priority: "medium",
+      subject: subject
+    )
+
+    assert_equal 1, subject.completed_tasks_count
+  end
+
+  test "progress_percentage returns zero without tasks" do
+    subject = Subject.create!(
+      name: "Physics",
+      user: @user
+    )
+
+    assert_equal 0, subject.progress_percentage
+  end
+
+  test "progress_percentage calculates completed task percentage" do
+    subject = Subject.create!(
+      name: "Databases",
+      user: @user
+    )
+
+    Task.create!(
+      title: "Task 1",
+      deadline: Date.tomorrow,
+      status: "completed",
+      priority: "medium",
+      subject: subject
+    )
+
+    Task.create!(
+      title: "Task 2",
+      deadline: Date.tomorrow,
+      status: "completed",
+      priority: "medium",
+      subject: subject
+    )
+
+    Task.create!(
+      title: "Task 3",
+      deadline: Date.tomorrow,
+      status: "pending",
+      priority: "medium",
+      subject: subject
+    )
+
+    assert_equal 67, subject.progress_percentage
+  end
+
 end

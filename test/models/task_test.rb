@@ -96,4 +96,62 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal "pending", task.status
     assert_equal "medium", task.priority
   end
+
+  test "completed? returns true for completed task" do
+    task = Task.new(
+      status: "completed"
+    )
+
+    assert task.completed?
+  end
+
+  test "completed? returns false for unfinished task" do
+    task = Task.new(
+      status: "pending"
+    )
+
+    assert_not task.completed?
+  end
+
+  test "overdue? returns true for unfinished task with past deadline" do
+    task = Task.new(
+      status: "pending",
+      deadline: Date.yesterday
+    )
+
+    assert task.overdue?
+  end
+
+  test "overdue? returns false for completed task" do
+    task = Task.new(
+      status: "completed",
+      deadline: Date.yesterday
+    )
+
+    assert_not task.overdue?
+  end
+
+  test "overdue? returns false for future deadline" do
+    task = Task.new(
+      status: "pending",
+      deadline: Date.tomorrow
+    )
+
+    assert_not task.overdue?
+  end
+
+  test "days_left returns number of days until deadline" do
+    task = Task.new(
+      deadline: Date.current + 5.days
+    )
+
+    assert_equal 5, task.days_left
+  end
+
+  test "days_left returns nil without deadline" do
+    task = Task.new
+
+    assert_nil task.days_left
+  end
+
 end
