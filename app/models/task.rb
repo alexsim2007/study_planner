@@ -33,4 +33,16 @@ class Task < ApplicationRecord
 
     (deadline - Date.current).to_i
   end
+
+  validate :deadline_cannot_be_in_the_past
+
+  private
+
+  def deadline_cannot_be_in_the_past
+    return if deadline.blank?
+
+    if deadline < Date.current
+      errors.add(:deadline, "не может быть в прошлом")
+    end
+  end
 end

@@ -6,83 +6,110 @@
   </div>
 </header>
 
-
 <section class="glass task-editor">
 
-  <div class="field field--full">
-    <label>Название</label>
+  <% if @subjects.empty? %>
 
-    <input
-      type="text"
-      placeholder="Например, лабораторная работа №4"
-    >
-  </div>
+    <div class="empty-state">
+      <h3>Сначала создай предмет</h3>
 
+      <p>
+        Задание должно относиться к какому-либо предмету.
+      </p>
 
-  <div class="field field--full">
-    <label>Описание</label>
-
-    <textarea
-      rows="5"
-      placeholder="Краткое описание задания"
-    ></textarea>
-  </div>
-
-
-  <div class="form-grid">
-
-    <div class="field">
-      <label>Предмет</label>
-
-      <select>
-        <option>Выберите предмет</option>
-        <option>Программирование</option>
-        <option>Математика</option>
-        <option>Физика</option>
-      </select>
+      <%= link_to "Перейти к предметам",
+                  subjects_path,
+                  class: "button" %>
     </div>
 
+  <% else %>
 
-    <div class="field">
-      <label>Дедлайн</label>
-      <input type="date">
-    </div>
+    <%= form_with model: @task, url: tasks_path do |form| %>
 
+      <% if @task.errors.any? %>
+        <div class="form-errors">
+          <% @task.errors.full_messages.each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
 
-    <div class="field">
-      <label>Приоритет</label>
+      <div class="field field--full">
+        <%= form.label :title, "Название" %>
 
-      <select>
-        <option>Низкий</option>
-        <option selected>Средний</option>
-        <option>Высокий</option>
-      </select>
-    </div>
-
-
-    <div class="field">
-      <label>Статус</label>
-
-      <select>
-        <option>Не выполнено</option>
-        <option>В процессе</option>
-        <option>Выполнено</option>
-      </select>
-    </div>
-
-  </div>
+        <%= form.text_field :title,
+                            placeholder: "Например, лабораторная работа №4" %>
+      </div>
 
 
-  <div class="task-editor__actions">
+      <div class="field field--full">
+        <%= form.label :description, "Описание" %>
 
-    <%= link_to "Отмена",
-                tasks_path,
-                class: "button button--secondary" %>
+        <%= form.text_area :description,
+                           rows: 5,
+                           placeholder: "Краткое описание задания" %>
+      </div>
 
-    <button type="button" class="button">
-      Сохранить
-    </button>
 
-  </div>
+      <div class="form-grid">
+
+        <div class="field">
+          <%= form.label :subject_id, "Предмет" %>
+
+          <%= form.collection_select(
+                :subject_id,
+                @subjects,
+                :id,
+                :name,
+                { prompt: "Выберите предмет" }
+              ) %>
+        </div>
+
+
+        <div class="field">
+          <%= form.label :deadline, "Дедлайн" %>
+
+          <%= form.date_field :deadline,
+                              value: (@task.deadline || Date.current),
+                              min: Date.current.iso8601 %>
+        </div>
+
+
+        <div class="field">
+          <%= form.label :priority, "Приоритет" %>
+
+          <%= form.select :priority, [
+            ["Низкий", "low"],
+            ["Средний", "medium"],
+            ["Высокий", "high"]
+          ] %>
+        </div>
+
+
+        <div class="field">
+          <%= form.label :status, "Статус" %>
+
+          <%= form.select :status, [
+            ["Не выполнено", "pending"],
+            ["В процессе", "in_progress"],
+            ["Выполнено", "completed"]
+          ] %>
+        </div>
+
+      </div>
+
+
+      <div class="task-editor__actions">
+        <%= link_to "Отмена",
+                    tasks_path,
+                    class: "button button--secondary" %>
+
+        <%= form.submit "Сохранить",
+                        class: "button" %>
+      </div>
+
+    <% end %>
+
+  <% end %>
 
 </section>

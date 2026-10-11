@@ -5,112 +5,150 @@
     <p>Следи за текущими заданиями и дедлайнами.</p>
   </div>
 
-  <%= link_to "+ Добавить", new_task_path, class: "button" %>
+  <%= link_to "+ Добавить",
+              new_task_path,
+              class: "button" %>
 </header>
 
 
-<section class="glass table-card">
+<% if @tasks.any? %>
 
-  <div class="task-filters">
+  <section class="glass table-card">
 
-    <select>
-      <option>Все предметы</option>
-      <option>Программирование</option>
-      <option>Математика</option>
-      <option>Физика</option>
-    </select>
+    <div class="table-wrapper">
 
-    <select>
-      <option>Все статусы</option>
-      <option>Не выполнено</option>
-      <option>В процессе</option>
-      <option>Выполнено</option>
-    </select>
+      <table class="tasks-table">
 
-    <input
-      type="search"
-      placeholder="Поиск..."
-    >
+        <thead>
+        <tr>
+          <th>Название</th>
+          <th>Предмет</th>
+          <th>Дедлайн</th>
+          <th>Статус</th>
+          <th>Приоритет</th>
+          <th>Действия</th>
+        </tr>
+        </thead>
 
-  </div>
+        <tbody>
+
+        <% @tasks.each do |task| %>
+
+          <tr>
+            <td>
+              <%= task.title %>
+
+              <% if task.overdue? %>
+                  <span class="overdue-label">
+                    Просрочено
+                  </span>
+              <% end %>
+            </td>
+
+            <td>
+              <%= task.subject.name %>
+            </td>
+
+            <td>
+              <%= task.deadline.strftime("%d.%m.%Y") %>
+            </td>
+
+            <td>
+              <% case task.status %>
+              <% when "completed" %>
+
+                  <span class="status status--green">
+                    Выполнено
+                  </span>
+
+              <% when "in_progress" %>
+
+                  <span class="status status--yellow">
+                    В процессе
+                  </span>
+
+              <% else %>
+
+                  <span class="status status--red">
+                    Не выполнено
+                  </span>
+
+              <% end %>
+            </td>
+
+            <td>
+              <% case task.priority %>
+              <% when "high" %>
+
+                  <span class="status status--red">
+                    Высокий
+                  </span>
+
+              <% when "medium" %>
+
+                  <span class="status status--yellow">
+                    Средний
+                  </span>
+
+              <% else %>
+
+                  <span class="status status--green">
+                    Низкий
+                  </span>
+
+              <% end %>
+            </td>
+
+            <td>
+              <div class="task-actions">
+
+                <% unless task.completed? %>
+
+                  <%= button_to "✓",
+                                complete_task_path(task),
+                                method: :patch,
+                                class: "task-action task-action--complete",
+                                title: "Выполнить" %>
+
+                <% end %>
 
 
-  <div class="table-wrapper">
+                <%= button_to "Удалить",
+                              task_path(task),
+                              method: :delete,
+                              class: "task-action task-action--delete",
+                              form: {
+                                data: {
+                                  turbo_confirm: "Удалить задание?"
+                                }
+                              } %>
 
-    <table class="tasks-table">
+              </div>
+            </td>
+          </tr>
 
-      <thead>
-      <tr>
-        <th>Название</th>
-        <th>Предмет</th>
-        <th>Дедлайн</th>
-        <th>Статус</th>
-        <th>Приоритет</th>
-      </tr>
-      </thead>
+        <% end %>
 
-      <tbody>
+        </tbody>
 
-      <tr>
-        <td>Лабораторная №3</td>
-        <td>Математика</td>
-        <td>18.09</td>
+      </table>
 
-        <td>
-            <span class="status status--red">
-              Не выполнено
-            </span>
-        </td>
+    </div>
 
-        <td>
-            <span class="status status--red">
-              Высокий
-            </span>
-        </td>
-      </tr>
+  </section>
 
+<% else %>
 
-      <tr>
-        <td>Контрольная работа</td>
-        <td>Программирование</td>
-        <td>20.09</td>
+  <section class="glass empty-state">
+    <h3>Заданий пока нет</h3>
 
-        <td>
-            <span class="status status--yellow">
-              В процессе
-            </span>
-        </td>
+    <p>
+      Создай первое задание и оно появится здесь.
+    </p>
 
-        <td>
-            <span class="status status--yellow">
-              Средний
-            </span>
-        </td>
-      </tr>
+    <%= link_to "Создать задание",
+                new_task_path,
+                class: "button" %>
+  </section>
 
-
-      <tr>
-        <td>Лабораторная №2</td>
-        <td>Физика</td>
-        <td>22.09</td>
-
-        <td>
-            <span class="status status--green">
-              Выполнено
-            </span>
-        </td>
-
-        <td>
-            <span class="status status--green">
-              Низкий
-            </span>
-        </td>
-      </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</section>
+<% end %>

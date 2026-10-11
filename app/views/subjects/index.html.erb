@@ -4,75 +4,95 @@
     <h1>Мои предметы</h1>
     <p>Все учебные дисциплины в одном месте.</p>
   </div>
-
-  <button class="button" type="button">
-    + Добавить предмет
-  </button>
 </header>
 
 
-<div class="subjects-grid">
+<section class="glass subject-create">
+  <h2>Добавить предмет</h2>
 
-  <article class="glass subject-card">
-    <div class="subject-card__icon">
-      &lt;/&gt;
+  <%= form_with model: @subject, url: subjects_path do |form| %>
+
+    <% if @subject.errors.any? %>
+      <div class="form-errors">
+        <% @subject.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="subject-create__form">
+      <%= form.text_field :name,
+                          placeholder: "Например, Базы данных" %>
+
+      <%= form.submit "Добавить", class: "button" %>
     </div>
 
-    <div class="subject-card__body">
-      <h2>Программирование</h2>
-      <span>3 задания</span>
-
-      <div class="progress">
-        <div class="progress__bar" style="width: 67%"></div>
-      </div>
-
-      <div class="progress__text">
-        <span>Прогресс</span>
-        <strong>67%</strong>
-      </div>
-    </div>
-  </article>
+  <% end %>
+</section>
 
 
-  <article class="glass subject-card">
-    <div class="subject-card__icon">
-      ∑
-    </div>
+<% if @subjects.any? %>
 
-    <div class="subject-card__body">
-      <h2>Математика</h2>
-      <span>2 задания</span>
+  <div class="subjects-grid">
 
-      <div class="progress">
-        <div class="progress__bar" style="width: 50%"></div>
-      </div>
+    <% @subjects.each do |subject| %>
 
-      <div class="progress__text">
-        <span>Прогресс</span>
-        <strong>50%</strong>
-      </div>
-    </div>
-  </article>
+      <article class="glass subject-card">
 
+        <div class="subject-card__icon">
+          <%= subject.name.first.upcase %>
+        </div>
 
-  <article class="glass subject-card">
-    <div class="subject-card__icon">
-      φ
-    </div>
+        <div class="subject-card__body">
 
-    <div class="subject-card__body">
-      <h2>Физика</h2>
-      <span>3 задания</span>
+          <h2><%= subject.name %></h2>
 
-      <div class="progress">
-        <div class="progress__bar" style="width: 33%"></div>
-      </div>
+          <span>
+            <%= subject.tasks.count %>
+            заданий
+          </span>
 
-      <div class="progress__text">
-        <span>Прогресс</span>
-        <strong>33%</strong>
-      </div>
-    </div>
-  </article>
+          <div class="progress">
+            <div
+              class="progress__bar"
+              style="width: <%= subject.progress_percentage %>%"
+            ></div>
+          </div>
 
-</div>
+          <div class="progress__text">
+            <span>Прогресс</span>
+
+            <strong>
+              <%= subject.progress_percentage %>%
+            </strong>
+          </div>
+
+          <%= button_to "Удалить",
+                        subject_path(subject),
+                        method: :delete,
+                        class: "subject-delete",
+                        form: {
+                          data: {
+                            turbo_confirm: "Удалить предмет?"
+                          }
+                        } %>
+
+        </div>
+
+      </article>
+
+    <% end %>
+
+  </div>
+
+<% else %>
+
+  <section class="glass empty-state">
+    <h3>Предметов пока нет</h3>
+
+    <p>
+      Добавь первый предмет с помощью формы выше.
+    </p>
+  </section>
+
+<% end %>

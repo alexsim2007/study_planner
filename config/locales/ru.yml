@@ -1,0 +1,28 @@
+ru:
+  activerecord:
+    attributes:
+      user:
+        name: "Имя"
+        email: "Email"
+
+      subject:
+        name: "Название"
+
+      task:
+        title: "Название"
+        description: "Описание"
+        deadline: "Дедлайн"
+        status: "Статус"
+        priority: "Приоритет"
+        subject: "Предмет"
+
+    errors:
+      messages:
+        blank: "не может быть пустым"
+        taken: "уже существует"
+        invalid: "имеет неверное значение"
+        inclusion: "имеет недопустимое значение"
+        too_long: "слишком длинное"
+
+  errors:
+    format: "%{attribute} %{message}"

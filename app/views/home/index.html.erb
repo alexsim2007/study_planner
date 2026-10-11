@@ -16,20 +16,43 @@
 <section class="dashboard-grid">
   <article class="glass stat-card">
     <span class="stat-card__label">Всего задач</span>
-    <strong class="stat-card__value">0</strong>
-    <span class="stat-card__hint">Пока задач нет</span>
+    <strong class="stat-card__value">
+      <%= @tasks_count %>
+    </strong>
+
+    <span class="stat-card__hint">
+      <%= @tasks_count.zero? ? "Пока задач нет" : "Всего учебных задач" %>
+    </span>
   </article>
 
   <article class="glass stat-card">
     <span class="stat-card__label">Выполнено</span>
-    <strong class="stat-card__value">0</strong>
-    <span class="stat-card__hint">Начни с первой задачи</span>
+    <strong class="stat-card__value">
+      <%= @completed_tasks_count %>
+    </strong>
+
+    <span class="stat-card__hint">
+  Выполненных заданий
+</span>
   </article>
 
   <article class="glass stat-card">
     <span class="stat-card__label">Ближайший дедлайн</span>
-    <strong class="stat-card__value">—</strong>
-    <span class="stat-card__hint">Дедлайнов пока нет</span>
+    <% if @nearest_task %>
+      <strong class="stat-card__value">
+        <%= @nearest_task.deadline.strftime("%d.%m") %>
+      </strong>
+
+      <span class="stat-card__hint">
+        <%= @nearest_task.title %>
+      </span>
+    <% else %>
+      <strong class="stat-card__value">—</strong>
+
+      <span class="stat-card__hint">
+    Дедлайнов пока нет
+  </span>
+    <% end %>
   </article>
 </section>
 
@@ -40,23 +63,50 @@
       <h2>Предстоящие задачи</h2>
     </div>
 
-    <button
-      class="button"
-      type="button"
-      id="open-task-modal"
-    >
-      Добавить задачу
-    </button>
+    <%= link_to "Добавить задачу",
+                new_task_path,
+                class: "button" %>
   </div>
 
-  <div class="empty-state">
-    <h3>Здесь пока пусто</h3>
+  <% if @upcoming_tasks.any? %>
 
-    <p>
-      Когда мы добавим систему задач,
-      они будут отображаться здесь.
-    </p>
-  </div>
+    <div class="dashboard-tasks">
+
+      <% @upcoming_tasks.each do |task| %>
+
+        <div class="dashboard-task">
+
+          <div>
+            <strong>
+              <%= task.title %>
+            </strong>
+
+            <span>
+              <%= task.subject.name %>
+            </span>
+          </div>
+
+          <div class="dashboard-task__deadline">
+            <%= task.deadline.strftime("%d.%m.%Y") %>
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="empty-state">
+      <h3>Здесь пока пусто</h3>
+
+      <p>
+        Создай первое задание, и оно появится здесь.
+      </p>
+    </div>
+
+  <% end %>
 </section>
 <div class="modal" id="task-modal" aria-hidden="true">
   <div class="modal__overlay" id="modal-overlay"></div>
