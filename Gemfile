@@ -68,4 +68,4 @@ end
 gem "bcrypt", "~> 3.1"
 
 # JSON version < 3, beacuse of bug(incompatibility)
-gem "json", "< 3"
+gem "json", "< 4"
