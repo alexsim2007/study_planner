@@ -1,0 +1,68 @@
+<%= turbo_frame_tag "subjects_list" do %>
+<% subjects = user.subjects.includes(:tasks).order(:name) %>
+<% if subjects.any? %>
+
+  <div class="subjects-grid">
+
+    <% subjects.each do |subject| %>
+
+      <article class="glass subject-card">
+
+        <div class="subject-card__icon">
+          <%= subject.name.first.upcase %>
+        </div>
+
+        <div class="subject-card__body">
+
+          <h2><%= subject.name %></h2>
+
+          <span>
+            <%= subject.tasks.count %>
+            заданий
+          </span>
+
+          <div class="progress">
+            <div
+              class="progress__bar"
+              style="width: <%= subject.progress_percentage %>%"
+            ></div>
+          </div>
+
+          <div class="progress__text">
+            <span>Прогресс</span>
+
+            <strong>
+              <%= subject.progress_percentage %>%
+            </strong>
+          </div>
+
+          <%= button_to "Удалить",
+                        subject_path(subject),
+                        method: :delete,
+                        class: "subject-delete",
+                        form: {
+                          data: {
+                            turbo_confirm: "Удалить предмет?"
+                          }
+                        } %>
+
+        </div>
+
+      </article>
+
+    <% end %>
+
+  </div>
+
+<% else %>
+
+  <section class="glass empty-state">
+    <h3>Предметов пока нет</h3>
+
+    <p>
+      Добавь первый предмет с помощью формы выше.
+    </p>
+  </section>
+
+<% end %>
+<% end %>

@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "profile_statistics" do %>
+  <div class="profile-stats">
+
+    <div>
+      <span>Предметы</span>
+      <strong><%= user.subjects.count %></strong>
+    </div>
+
+    <div>
+      <span>Задания</span>
+      <strong><%= user.total_tasks_count %></strong>
+    </div>
+
+    <div>
+      <span>Выполнено</span>
+      <strong><%= user.completed_tasks_count %></strong>
+    </div>
+
+  </div>
+<% end %>

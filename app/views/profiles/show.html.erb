@@ -23,42 +23,10 @@
   </div>
 
 
-  <div class="profile-stats">
-
-    <div>
-      <span>Предметы</span>
-      <strong>3</strong>
-    </div>
-
-    <div>
-      <span>Задания</span>
-      <strong>8</strong>
-    </div>
-
-    <div>
-      <span>Выполнено</span>
-      <strong>5</strong>
-    </div>
-
-  </div>
-
+  <%= render "profiles/statistics", user: current_user %>
 
   <div class="profile-actions">
-
-    <button
-      class="button button--secondary"
-      type="button"
-    >
-      Редактировать профиль
-    </button>
-
-    <button
-      class="button danger-button"
-      type="button"
-    >
-      Выйти из аккаунта
-    </button>
-
+    <%= button_to "Выйти из аккаунта", logout_path, method: :delete,
+                  class: "button danger-button" %>
   </div>
-
 </section>

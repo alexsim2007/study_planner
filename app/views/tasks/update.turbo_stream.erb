@@ -1,0 +1,4 @@
+<%= render "shared/planner_updates", user: current_user %>
+<%= turbo_stream.update "flash_messages" do %>
+  <%= render "shared/flash", notice: message, alert: nil %>
+<% end %>

@@ -1,5 +1,6 @@
 class Subject < ApplicationRecord
   belongs_to :user
+  after_commit -> { PlannerBroadcaster.call(user_id) }, on: %i[create update destroy]
 
   has_many :tasks, dependent: :destroy
 

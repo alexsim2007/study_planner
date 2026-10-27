@@ -1655,3 +1655,7 @@ html[data-theme="light"] .sidebar__link.is-active {
     font-size: 13px;
     white-space: nowrap;
 }
+/* Frames are independent update boundaries and keep the existing page layout. */
+turbo-frame {
+    display: block;
+}

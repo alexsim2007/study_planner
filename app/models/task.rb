@@ -3,6 +3,7 @@ class Task < ApplicationRecord
   PRIORITIES = %w[low medium high].freeze
 
   belongs_to :subject
+  after_commit -> { PlannerBroadcaster.call(subject&.user_id) }, on: %i[create update destroy]
 
   validates :title,
             presence: true,
@@ -34,7 +35,8 @@ class Task < ApplicationRecord
     (deadline - Date.current).to_i
   end
 
-  validate :deadline_cannot_be_in_the_past
+  validate :deadline_cannot_be_in_the_past,
+           if: -> { new_record? || will_save_change_to_deadline? }
 
   private
 

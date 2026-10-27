@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "subject_form" do %>
+<section class="glass subject-create">
+  <h2>Добавить предмет</h2>
+
+  <%= form_with model: subject, url: subjects_path do |form| %>
+
+    <% if subject.errors.any? %>
+      <div class="form-errors">
+        <% subject.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="subject-create__form">
+      <%= form.text_field :name,
+                          placeholder: "Например, Базы данных" %>
+
+      <%= form.submit "Добавить", class: "button" %>
+    </div>
+
+  <% end %>
+</section>
+<% end %>

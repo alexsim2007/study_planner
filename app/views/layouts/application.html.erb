@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
   <head>
     <title><%= content_for(:title) || "Study Planner" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -20,12 +20,13 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", defer: true %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
 
   <% if logged_in? %>
+    <%= turbo_stream_from current_user, :planner %>
 
     <div class="app-shell">
 
@@ -33,17 +34,9 @@
 
       <main class="app-main">
 
-        <% if notice %>
-          <div class="flash flash--success">
-            <%= notice %>
-          </div>
-        <% end %>
-
-        <% if alert %>
-          <div class="flash flash--error">
-            <%= alert %>
-          </div>
-        <% end %>
+        <div id="flash_messages" aria-live="polite">
+          <%= render "shared/flash", notice: notice, alert: alert %>
+        </div>
 
         <%= yield %>
 

@@ -1,0 +1,55 @@
+<%= turbo_frame_tag "dashboard_upcoming" do %>
+<% upcoming_tasks = user.upcoming_tasks %>
+<section class="glass tasks-card">
+  <div class="tasks-card__header">
+    <div>
+      <p class="eyebrow">OVERVIEW</p>
+      <h2>Предстоящие задачи</h2>
+    </div>
+
+    <%= link_to "Добавить задачу",
+                new_task_path,
+                class: "button", data: { turbo_frame: "_top" } %>
+  </div>
+
+  <% if upcoming_tasks.any? %>
+
+    <div class="dashboard-tasks">
+
+      <% upcoming_tasks.each do |task| %>
+
+        <div class="dashboard-task">
+
+          <div>
+            <strong>
+              <%= task.title %>
+            </strong>
+
+            <span>
+              <%= task.subject.name %>
+            </span>
+          </div>
+
+          <div class="dashboard-task__deadline">
+            <%= task.deadline.strftime("%d.%m.%Y") %>
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="empty-state">
+      <h3>Здесь пока пусто</h3>
+
+      <p>
+        Новых предстоящих заданий пока нет. Добавь задание с текущим или будущим дедлайном.
+      </p>
+    </div>
+
+  <% end %>
+</section>
+<% end %>

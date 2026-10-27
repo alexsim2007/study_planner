@@ -2,9 +2,6 @@ class TasksController < ApplicationController
   before_action :require_login
 
   def index
-    @tasks = current_user.tasks
-                         .includes(:subject)
-                         .order(:deadline)
   end
 
   def new
@@ -13,18 +10,17 @@ class TasksController < ApplicationController
   end
 
   def create
-    subject = current_user.subjects.find(task_params[:subject_id])
+    subject = current_user.subjects.find(task_params[:subject_id]) if task_params[:subject_id].present?
 
-    @task = subject.tasks.new(
-      task_params.except(:subject_id)
-    )
+    @task = Task.new(task_params.except(:subject_id))
+    @task.subject = subject
 
     if @task.save
-      redirect_to tasks_path, notice: "Задание добавлено."
+      redirect_to tasks_path, notice: "Задание добавлено.", status: :see_other
     else
       @subjects = current_user.subjects.order(:name)
 
-      render :new, status: :unprocessable_entity
+      render :new, formats: [ :html ], status: :unprocessable_entity
     end
   end
 
@@ -33,18 +29,25 @@ class TasksController < ApplicationController
 
     task.update!(status: "completed")
 
-    redirect_to tasks_path, notice: "Задание выполнено."
+    respond_with_updates("Задание выполнено.")
   end
 
   def destroy
     task = current_user.tasks.find(params[:id])
 
-    task.destroy
+    task.destroy!
 
-    redirect_to tasks_path, notice: "Задание удалено."
+    respond_with_updates("Задание удалено.")
   end
 
   private
+
+  def respond_with_updates(message)
+    respond_to do |format|
+      format.turbo_stream { render :update, locals: { message: message } }
+      format.html { redirect_to tasks_path, notice: message, status: :see_other }
+    end
+  end
 
   def task_params
     params.require(:task).permit(

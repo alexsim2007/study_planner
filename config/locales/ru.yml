@@ -18,6 +18,8 @@ ru:
 
     errors:
       messages:
+        required: "должен быть выбран"
+        record_invalid: "Проверка не пройдена: %{errors}"
         blank: "не может быть пустым"
         taken: "уже существует"
         invalid: "имеет неверное значение"

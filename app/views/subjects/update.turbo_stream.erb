@@ -1,0 +1,7 @@
+<%= render "shared/planner_updates", user: current_user %>
+<% if reset_form %>
+  <%= turbo_stream.replace "subject_form", partial: "subjects/form", locals: { subject: Subject.new } %>
+<% end %>
+<%= turbo_stream.update "flash_messages" do %>
+  <%= render "shared/flash", notice: message, alert: nil %>
+<% end %>

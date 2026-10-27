@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/live", to: redirect("/")
   root "home#index"
 
   get "/register", to: "users#new"
@@ -9,11 +10,11 @@ Rails.application.routes.draw do
 
   delete "/logout", to: "sessions#destroy"
 
-  resources :subjects, only: [:index, :create, :destroy]
-  resources :tasks, only: [:index, :new, :create, :destroy] do
+  resources :subjects, only: [ :index, :create, :destroy ]
+  resources :tasks, only: [ :index, :new, :create, :destroy ] do
     member do
       patch :complete
     end
   end
-  resource :profile, only: [:show]
+  resource :profile, only: [ :show ]
 end

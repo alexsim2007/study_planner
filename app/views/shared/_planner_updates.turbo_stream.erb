@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "dashboard_statistics", partial: "home/statistics", locals: { user: user } %>
+<%= turbo_stream.replace "dashboard_upcoming", partial: "home/upcoming", locals: { user: user } %>
+<%= turbo_stream.replace "tasks_list", partial: "tasks/list", locals: { user: user } %>
+<%= turbo_stream.replace "subjects_list", partial: "subjects/list", locals: { user: user } %>
+<%= turbo_stream.replace "profile_statistics", partial: "profiles/statistics", locals: { user: user } %>
